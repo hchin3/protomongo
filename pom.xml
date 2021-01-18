@@ -16,6 +16,10 @@
 
 	<properties>
 		<java.version>11</java.version>
+
+		<sonar.projectKey>ukzed_protomongo</sonar.projectKey>
+		<sonar.organization>ukzed</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
