@@ -27,7 +27,7 @@
 			src/main/java/com/**/ProtomongoApplication.java
 			src/main/java/com/**/MongoController.java
 			src/main/java/com/**/MongoDbConfiguration.java
-			src/test/java/com/**/*.java
+			src/test/**/*.java
 		</sonar.coverage.exclusions>
 	</properties>
 
