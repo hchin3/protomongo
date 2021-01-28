@@ -25,7 +25,7 @@ import com.zirakzigil.protomongo.controller.MongoController;
 import com.zirakzigil.protomongo.service.NoSqlService;
 
 @WebMvcTest
-public class MongoControllerTest {
+class MongoControllerTest {
 
 	@MockBean
 	private NoSqlService mongoService;
@@ -39,7 +39,7 @@ public class MongoControllerTest {
 	private static ObjectMapper mapper = new ObjectMapper();
 
 	@Test
-	public void testConstuctor() {
+	void testConstuctor() {
 		assertNotNull(new MongoController(mongoService));
 	}
 
@@ -78,7 +78,7 @@ public class MongoControllerTest {
 	}
 
 	@Test
-	public void testListDatabaseNames() throws Exception {
+	void testListDatabaseNames() throws Exception {
 
 		final String name = "someName";
 		final double sizeOnDisk = 3d;
