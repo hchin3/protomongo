@@ -22,6 +22,11 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.links.homepage>https://github.com/ukzed/protomongo</sonar.links.homepage>
 		<sonar.links.scm>https://github.com/ukzed/protomongo</sonar.links.scm>
+		<sonar.coverage.exclusions>
+			**/ProtomongoApplication.java
+			**/MongoDbConfiguration.java
+			**/test/*.java
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
