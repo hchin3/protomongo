@@ -68,7 +68,7 @@ public class MongoDbConfiguration extends AbstractMongoClientConfiguration {
 	}
 
 	@Bean
-	public MongoClient mongoClient() {
+	public MongoClient customMongoClient() {
 		return mongoClient;
 	}
 
