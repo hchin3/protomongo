@@ -3,6 +3,9 @@ package com.zirakzigil.protomongo.db;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -71,6 +74,11 @@ public class MongoDbConfiguration extends AbstractMongoClientConfiguration {
 	@Override
 	public MongoClient mongoClient() {
 		return mongoClient;
+	}
+
+	@Override
+	protected Collection<String> getMappingBasePackages() {
+		return Collections.singleton("com.baeldung");
 	}
 
 	@PreDestroy
