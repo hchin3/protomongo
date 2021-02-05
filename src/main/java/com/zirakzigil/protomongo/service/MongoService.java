@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mongodb.client.MongoClient;
 
-public class MongoService implements NoSqlService {
+public class MongoService {
 
 	private final MongoClient mongoClient;
 
@@ -17,7 +17,6 @@ public class MongoService implements NoSqlService {
 		this.mongoClient = mongoClient;
 	}
 
-	@Override
 	public List<Document> getDatabaseNames() {
 		return StreamSupport.stream(mongoClient.listDatabases().spliterator(), false).collect(Collectors.toList());
 	}

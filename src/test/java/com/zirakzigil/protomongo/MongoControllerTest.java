@@ -22,13 +22,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zirakzigil.protomongo.controller.MongoController;
-import com.zirakzigil.protomongo.service.NoSqlService;
+import com.zirakzigil.protomongo.service.MongoService;
 
 @WebMvcTest
 class MongoControllerTest {
 
 	@MockBean
-	private NoSqlService mongoService;
+	private MongoService mongoService;
 
 	@MockBean
 	private MongoController mongoController;

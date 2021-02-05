@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zirakzigil.protomongo.service.NoSqlService;
+import com.zirakzigil.protomongo.service.MongoService;
 
 @RestController
 @RequestMapping(path = "/mongo/1")
 public class MongoController {
 
-	private final NoSqlService mongoService;
+	private final MongoService mongoService;
 
-	public MongoController(@Autowired final NoSqlService mongoService) {
+	public MongoController(@Autowired final MongoService mongoService) {
 		this.mongoService = mongoService;
 	}
 
