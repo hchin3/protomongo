@@ -14,4 +14,8 @@ public class Endpoint {
 	public static final String RELATIVE_FIRSTNAME = "/firstName/{firstName}";
 	public static final String RELATIVE_LASTNAME = "/lastName/{lastName}";
 
+	private Endpoint() {
+		throw new IllegalStateException("REST endpoint constants class.");
+	}
+
 }
