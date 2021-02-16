@@ -1,6 +1,5 @@
 package com.zirakzigil.protomongo;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,10 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zirakzigil.protomongo.controller.Endpoint;
 import com.zirakzigil.protomongo.controller.MongoController;
 import com.zirakzigil.protomongo.service.MongoService;
 
-@WebMvcTest
+@WebMvcTest(MongoController.class)
 class MongoControllerTest {
 
 	@MockBean
@@ -37,11 +37,6 @@ class MongoControllerTest {
 	private MockMvc mockMvc;
 
 	private static ObjectMapper mapper = new ObjectMapper();
-
-	@Test
-	void testConstuctor() {
-		assertNotNull(new MongoController(mongoService));
-	}
 
 	private class Database {
 
@@ -105,7 +100,9 @@ class MongoControllerTest {
 
 		final String json = mapper.writeValueAsString(dbList);
 
-		mockMvc.perform(get("/mongo/1/databases").content(json)).andExpect(status().isOk())
+		final String url = Endpoint.MONGO_ENDPOINT_1_ROOT + Endpoint.RELATIVE_DATABASES;
+
+		mockMvc.perform(get(url).content(json)).andExpect(status().isOk())
 				.andExpect(jsonPath("$..name", Matchers.equalTo(Lists.newArrayList(name))))
 				.andExpect(jsonPath("$..sizeOnDisk", Matchers.equalTo(Lists.newArrayList(sizeOnDisk))))
 				.andExpect(jsonPath("$..empty", Matchers.equalTo(Lists.newArrayList(empty))));
