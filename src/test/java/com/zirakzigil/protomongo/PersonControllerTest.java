@@ -167,7 +167,7 @@ class PersonControllerTest {
 	}
 
 	@Test
-	void testRead() throws Exception {
+	void testReadOk() throws Exception {
 
 		final Person person = mockPerson(USER_0_ID, USER_0_FIRSTNAME, USER_0_LASTNAME);
 
@@ -178,6 +178,17 @@ class PersonControllerTest {
 		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
 		mockMvc.perform(get(url)).andExpect(status().isOk())
 				.andExpect(jsonPath(expression, Matchers.equalTo(USER_0_FIRSTNAME)));
+	}
+
+	@Test
+	void testReadNotFound() throws Exception {
+
+		final Person person = mockPerson(USER_0_ID, USER_0_FIRSTNAME, USER_0_LASTNAME);
+
+		Mockito.when(personService.read(USER_0_ID)).thenReturn(Optional.of(person));
+
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_1_ID);
+		mockMvc.perform(get(url)).andExpect(status().isNotFound());
 	}
 
 	@Test
