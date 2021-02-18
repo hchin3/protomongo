@@ -2,9 +2,12 @@ package com.zirakzigil.protomongo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
@@ -163,15 +166,110 @@ class PersonServiceTest {
 	@Test
 	void testCreate() {
 
+		{
+			final List<Person> list = personService.findAll();
+
+			assertNotNull(list);
+			assertFalse(list.isEmpty());
+			assertEquals(3, list.size());
+		}
+
+		final String firstName = "Billy";
+		final String lastName = "Morton";
+
+		{
+			final Person person = new Person().firstName(firstName).lastName(lastName);
+
+			personService.create(person);
+		}
+
+		{
+			final List<Person> list = personService.findAll();
+
+			assertNotNull(list);
+			assertFalse(list.isEmpty());
+			assertEquals(4, list.size());
+		}
+
+		{
+			final List<Person> list = personService.findByLastName(lastName);
+
+			assertNotNull(list);
+			assertFalse(list.isEmpty());
+			assertEquals(1, list.size());
+
+			assertEquals(firstName, list.get(0).getFirstName());
+			assertEquals(lastName, list.get(0).getLastName());
+		}
+
 	}
 
 	@Test
 	void testRead() {
 
+		Optional<Person> exist = personService.read(id0);
+		assertNotNull(exist);
+		assertFalse(exist.isEmpty());
+
+		assertEquals(USER_0_FIRSTNAME, exist.get().getFirstName());
+		assertEquals(USER_0_LASTNAME, exist.get().getLastName());
+
+		Optional<Person> empty = personService.read("ASDF");
+		assertNotNull(empty);
+		assertTrue(empty.isEmpty());
+
 	}
 
 	@Test
 	void testUpdate() {
+
+		{
+			final List<Person> list = personService.findAll();
+
+			assertNotNull(list);
+			assertFalse(list.isEmpty());
+			assertEquals(3, list.size());
+		}
+
+		final String firstName = "Billy";
+		final String lastName = "Morton";
+
+		{
+			final Optional<Person> exist = personService.read(id2);
+
+			assertNotNull(exist);
+			assertFalse(exist.isEmpty());
+
+			final Person person = exist.get();
+
+			assertNotEquals(firstName, person.getFirstName());
+			assertNotEquals(lastName, person.getLastName());
+
+			person.setFirstName(firstName);
+			person.setLastName(lastName);
+
+			personService.update(person);
+		}
+
+		{
+			final Optional<Person> exist = personService.read(id2);
+
+			assertNotNull(exist);
+			assertFalse(exist.isEmpty());
+
+			final Person person = exist.get();
+
+			assertEquals(firstName, person.getFirstName());
+			assertEquals(lastName, person.getLastName());
+		}
+
+		{
+			final List<Person> list = personService.findAll();
+
+			assertNotNull(list);
+			assertFalse(list.isEmpty());
+			assertEquals(3, list.size());
+		}
 
 	}
 
