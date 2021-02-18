@@ -87,7 +87,7 @@ public class PersonController {
 	public ResponseEntity<Void> update(@PathVariable(name = "id") final String id,
 			@RequestBody @NonNull final PersonDTO dto) {
 
-		Preconditions.checkArgument(!Strings.isNullOrEmpty(id), "id cannot be blank.");
+		Preconditions.checkArgument(!Strings.isNullOrEmpty(dto.getId()), "Person.id cannot be blank.");
 
 		personService.update(dto.convertToPerson());
 

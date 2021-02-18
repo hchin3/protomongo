@@ -1,5 +1,6 @@
 package com.zirakzigil.protomongo;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,7 +23,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zirakzigil.protomongo.controller.Endpoint;
@@ -154,6 +157,18 @@ class PersonControllerTest {
 	}
 
 	@Test
+	void testCreateIdIsNotNull() throws Exception {
+
+		final PersonDTO dto = mockPersonDTO(USER_0_ID, USER_0_FIRSTNAME, USER_0_LASTNAME);
+		final String json = mapper.writeValueAsString(dto);
+		final MockHttpServletRequestBuilder builder = post(Endpoint.PERSON_ENDPOINT_1_ROOT)
+				.contentType(MediaType.APPLICATION_JSON).content(json);
+
+		// assertThrows(IllegalArgumentException.class, () -> mockMvc.perform(builder));
+		assertThrows(NestedServletException.class, () -> mockMvc.perform(builder));
+	}
+
+	@Test
 	void testCreate() throws Exception {
 
 		Mockito.when(personService.create(Mockito.any(Person.class))).thenReturn(USER_0_ID);
@@ -189,6 +204,29 @@ class PersonControllerTest {
 
 		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_1_ID);
 		mockMvc.perform(get(url)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testUpdateIdIsNullOrEmpty() throws Exception {
+
+		final PersonDTO dto = mockPersonDTO(null, USER_0_FIRSTNAME, USER_0_LASTNAME);
+		final String json = mapper.writeValueAsString(dto);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + "/";
+		final MockHttpServletRequestBuilder builder = put(url).contentType(MediaType.APPLICATION_JSON).content(json);
+
+		mockMvc.perform(builder).andExpect(status().isMethodNotAllowed());
+	}
+
+	@Test
+	void testUpdatePersonIdIsNullOrEmpty() throws Exception {
+
+		final PersonDTO dto = mockPersonDTO(null, USER_0_FIRSTNAME, USER_0_LASTNAME);
+		final String json = mapper.writeValueAsString(dto);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
+		final MockHttpServletRequestBuilder builder = put(url).contentType(MediaType.APPLICATION_JSON).content(json);
+
+		// assertThrows(IllegalArgumentException.class, () -> mockMvc.perform(builder));
+		assertThrows(NestedServletException.class, () -> mockMvc.perform(builder));
 	}
 
 	@Test

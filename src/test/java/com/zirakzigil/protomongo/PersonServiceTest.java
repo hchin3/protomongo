@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -40,10 +41,8 @@ import de.flapdoodle.embed.process.runtime.Network;
 @ActiveProfiles("test")
 class PersonServiceTest {
 
-	@SuppressWarnings("unused")
 	private static final Logger LOG = LoggerFactory.getLogger(PersonServiceTest.class);
 
-	private static final String ID = "id";
 	private static final String FIRSTNAME = "firstName";
 	private static final String LASTNAME = "lastName";
 
@@ -161,6 +160,18 @@ class PersonServiceTest {
 	@Test
 	void testCount() {
 		assertEquals(3, personService.count());
+	}
+
+	@Test
+	void testCreateNull() {
+		assertThrows(NullPointerException.class, () -> personService.create(null));
+	}
+
+	@Test
+	void testCreateIdNotNull() {
+		final Person person = new Person().id(id0).firstName(USER_0_FIRSTNAME).lastName(USER_0_LASTNAME);
+		LOG.info("Person: {}", person.toString());
+		assertThrows(IllegalArgumentException.class, () -> personService.create(person));
 	}
 
 	@Test
