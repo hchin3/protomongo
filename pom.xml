@@ -29,8 +29,6 @@
 		<sonar.links.scm>https://github.com/ukzed/protomongo</sonar.links.scm>
 		<sonar.coverage.exclusions>
 			src/main/java/com/**/ProtomongoApplication.java
-			src/main/java/com/**/*Controller.java
-			src/main/java/com/**/MongoDbConfiguration.java
 			src/test/**/*.java
 		</sonar.coverage.exclusions>
 	</properties>
