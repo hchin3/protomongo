@@ -66,7 +66,7 @@ public class PersonController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<PersonCreateResponse> create(@RequestBody @NonNull final PersonDTO dto) {
+	public ResponseEntity<PersonCreateResponse> create(@RequestBody final PersonDTO dto) {
 		Preconditions.checkArgument(dto.getId() == null, "Id must be null to create new Person.");
 		return ResponseEntity.ok(new PersonCreateResponse().id(personService.create(dto.convertToPerson())));
 	}

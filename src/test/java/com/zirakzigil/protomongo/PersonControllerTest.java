@@ -39,6 +39,8 @@ class PersonControllerTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PersonControllerTest.class);
 
+	private static final String ID_PATTERN = "{id}";
+
 	private static final String USER_0_ID = "0";
 	private static final String USER_0_FIRSTNAME = "Albert";
 	private static final String USER_0_LASTNAME = "Anderson";
@@ -190,7 +192,7 @@ class PersonControllerTest {
 
 		final String expression = "$.firstName";
 
-		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace(ID_PATTERN, USER_0_ID);
 		mockMvc.perform(get(url)).andExpect(status().isOk())
 				.andExpect(jsonPath(expression, Matchers.equalTo(USER_0_FIRSTNAME)));
 	}
@@ -202,7 +204,7 @@ class PersonControllerTest {
 
 		Mockito.when(personService.read(USER_0_ID)).thenReturn(Optional.of(person));
 
-		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_1_ID);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace(ID_PATTERN, USER_1_ID);
 		mockMvc.perform(get(url)).andExpect(status().isNotFound());
 	}
 
@@ -222,7 +224,7 @@ class PersonControllerTest {
 
 		final PersonDTO dto = mockPersonDTO(null, USER_0_FIRSTNAME, USER_0_LASTNAME);
 		final String json = mapper.writeValueAsString(dto);
-		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace(ID_PATTERN, USER_0_ID);
 		final MockHttpServletRequestBuilder builder = put(url).contentType(MediaType.APPLICATION_JSON).content(json);
 
 		// assertThrows(IllegalArgumentException.class, () -> mockMvc.perform(builder));
@@ -237,7 +239,7 @@ class PersonControllerTest {
 		final PersonDTO dto = mockPersonDTO(USER_0_ID, USER_0_FIRSTNAME, USER_0_LASTNAME);
 		final String json = mapper.writeValueAsString(dto);
 
-		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace(ID_PATTERN, USER_0_ID);
 
 		mockMvc.perform(put(url).contentType(MediaType.APPLICATION_JSON).content(json))
 				.andExpect(status().isNoContent());
@@ -245,7 +247,7 @@ class PersonControllerTest {
 
 	@Test
 	void testDelete() throws Exception {
-		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace("{id}", USER_0_ID);
+		final String url = Endpoint.PERSON_ENDPOINT_1_ROOT + Endpoint.RELATIVE_ID.replace(ID_PATTERN, USER_0_ID);
 		mockMvc.perform(delete(url)).andExpect(status().isNoContent());
 	}
 
