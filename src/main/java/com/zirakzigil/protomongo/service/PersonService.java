@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
+import com.zirakzigil.protomongo.aop.TrackDuration;
 import com.zirakzigil.protomongo.model.Person;
 import com.zirakzigil.protomongo.repository.PersonRepository;
 
@@ -34,6 +35,7 @@ public class PersonService {
 	 * 
 	 * @return
 	 */
+	@TrackDuration
 	public List<Person> findAll() {
 		return repository.findAll();
 	}
