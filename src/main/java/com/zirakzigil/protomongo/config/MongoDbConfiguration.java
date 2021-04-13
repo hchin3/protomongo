@@ -1,4 +1,4 @@
-package com.zirakzigil.protomongo.db;
+package com.zirakzigil.protomongo.config;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
