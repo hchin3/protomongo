@@ -20,7 +20,7 @@
 
 		<jacoco.version>0.8.6</jacoco.version>
 
-		<guava.version>30.1-jre</guava.version>
+		<guava.version>30.1.1-jre</guava.version>
 
 		<springfox.version>3.0.0</springfox.version>
 
