@@ -28,9 +28,9 @@ import com.mongodb.client.MongoClients;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.zirakzigil.protomongo")
-public class MongoDbConfiguration extends AbstractMongoClientConfiguration {
+public class MongoDbConfig extends AbstractMongoClientConfiguration {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MongoDbConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MongoDbConfig.class);
 
 	private final String uri;
 	private final String db;
@@ -38,7 +38,7 @@ public class MongoDbConfiguration extends AbstractMongoClientConfiguration {
 
 	private MongoClient mongoClient;
 
-	public MongoDbConfiguration(@Value("${spring.data.mongodb.uri}") final String uri,
+	public MongoDbConfig(@Value("${spring.data.mongodb.uri}") final String uri,
 			@Value("${spring.data.mongodb.database}") final String db,
 			@Value("${zz.data.mongodb.collection}") final String collection) {
 		this.uri = uri;
